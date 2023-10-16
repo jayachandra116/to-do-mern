@@ -1,0 +1,43 @@
+#section-add-to-do {
+  padding-top: 1rem;
+  background-color: #3876bf;
+  text-align: center;
+  height: 10rem;
+}
+
+.add-to-do-form {
+  padding: 1rem;
+  width: 25rem;
+  margin: auto;
+}
+
+.add-to-do-form input {
+  text-align: center;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.add-to-do-form input[type="text"] {
+  border-color: #072541;
+  height: 2rem;
+  border: 1.5px solid #f3f0ca;
+  border-radius: 10px;
+}
+
+.add-to-do-form .btn {
+  background: #f3f0ca;
+  color: #072541;
+  font: inherit;
+  border: 1.5px solid #f3f0ca;
+  padding: 0.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-to-do-form .btn:hover {
+  background: #072541;
+  color: #f3f0ca;
+}
