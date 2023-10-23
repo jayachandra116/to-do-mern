@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Bounce, Flip, Slide, ToastContainer, Zoom, toast } from "react-toastify";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -65,7 +65,7 @@ function App() {
           console.log("Error occurred while fetching all the todo items,");
           console.log(err);
           setIsLoading(false);
-          notify("ERROR",err.message);
+          notify("ERROR", err.message);
         });
     };
     fetchData();
@@ -85,7 +85,7 @@ function App() {
         console.log("Error occurred while fetching all the todo items,");
         console.log(err);
         setIsLoading(false);
-        notify("ERROR",err.message);
+        notify("ERROR", err.message);
       });
   };
 
@@ -105,13 +105,13 @@ function App() {
         console.log(json);
         fetchTodos();
         setIsLoading(false);
-        notify("SUCCESS",json.message)
+        notify("SUCCESS", json.message);
       })
       .catch((err) => {
         console.log("Error occurred while fetching  todo items,");
         console.log(err);
         setIsLoading(false);
-        notify("ERROR",err.message);
+        notify("ERROR", err.message);
       });
     setShowModal(false);
   };
@@ -132,13 +132,13 @@ function App() {
         console.log(json);
         fetchTodos();
         setIsLoading(false);
-        notify("SUCCESS",json.message)
+        notify("SUCCESS", json.message);
       })
       .catch((err) => {
         console.log("Error occurred while updating the todo item");
         console.log(err);
         setIsLoading(false);
-        notify("ERROR",err.message);
+        notify("ERROR", err.message);
       });
   };
 
@@ -155,13 +155,13 @@ function App() {
         console.log(json);
         fetchTodos();
         setIsLoading(false);
-        notify("SUCCESS",json.message)
+        notify("SUCCESS", json.message);
       })
       .catch((err) => {
         console.log("Error occurred while deleting the todo item");
         console.log(err);
         setIsLoading(false);
-        notify("ERROR",err.message);
+        notify("ERROR", err.message);
       });
   };
 
@@ -194,7 +194,7 @@ function App() {
         )}
       </main>
       <Footer />
-      <ToastContainer position="bottom-right" transition={Bounce}/>
+      <ToastContainer position="bottom-right" transition={Bounce} />
     </div>
   );
 }
