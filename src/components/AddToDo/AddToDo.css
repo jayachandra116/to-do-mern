@@ -2,7 +2,6 @@
   padding-top: 1rem;
   background-color: #3876bf;
   text-align: center;
-  height: 10rem;
 }
 
 .add-to-do-form {
@@ -17,6 +16,8 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
   width: 100%;
+  font-family: inherit;
+  font-weight: bold;
 }
 
 .add-to-do-form input[type="text"] {

@@ -1,0 +1,31 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  height: 100%;
+  width: 100%;
+}
+
+.modal {
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  vertical-align: middle;
+  z-index: 6;
+  background-color: white;
+  height: 65%;
+  width: 65%;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
