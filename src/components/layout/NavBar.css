@@ -3,15 +3,15 @@
   position: fixed;
   top: 0;
   left: 0;
-  background: #192655;
+  background: #F9ED69;
   padding: 0.5rem 1rem;
   z-index: 1;
-  color: #f3f0ca;
+  color: #6A2C70;
 }
 
-.main-header_brand {
-  height: 2.5rem;
-  color: #f3f0ca;
+.main-header__brand {
+  /* height: 2.5rem; */
+  color: #6A2C70;
   font-weight: bold;
   display: inline-block;
   vertical-align: middle;

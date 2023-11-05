@@ -1,199 +1,183 @@
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useContext, useEffect, useState } from "react";
+// import { createPortal } from "react-dom";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 // import components
-import AddToDo from "./components/AddToDo/AddToDo";
-import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
-import ToDoList from "./components/ToDoList";
-import LoadingSpinner from "./components/LoadingSpinner";
-import Modal from "./components/Modal";
-import Button from "./components/Button";
+import Footer from "./components/layout/Footer";
+import NavBar from "./components/layout/NavBar";
+import LoginForm from "./components/LoginForm";
+import AddToDo from "./components/ToDo/AddToDo/AddToDo";
+import ToDoList from "./components/ToDo/ToDoList";
+
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const authContext = useContext(AuthContext);
+  const [todos, setToDos] = useState([]);
 
-  const notify = (type, message) => {
-    switch (type) {
-      case "INFO": {
-        toast.info(message);
-        break;
-      }
-      case "SUCCESS": {
-        toast.success(message);
-        break;
-      }
-      case "WARNING": {
-        toast.warn(message);
-        break;
-      }
-      case "ERROR": {
-        toast.error(message);
-        break;
-      }
-      default: {
-        toast(message);
-      }
-    }
+  const fetchMyTodos = () => {
+    fetch("http://localhost:8080/todo/mine", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + authContext.user.token,
+      },
+    })
+      .then((result) => {
+        if (result.status === 422) {
+          throw new Error("Validation failed!");
+        }
+        if (result.status !== 200 && result.status !== 201) {
+          console.log("Error!");
+          throw new Error("Fetching todo Failed!");
+        }
+        return result.json();
+      })
+      .then((resData) => {
+        if (resData.status === "success") {
+          toast("Fetched todos successfully");
+          setToDos(resData.todos);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast(err);
+      });
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const addTodoHandler = async (todo) => {
+    fetch("http://localhost:8080/todo/new", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + authContext.user.token,
+      },
+      body: JSON.stringify({
+        ...todo,
+      }),
+    })
+      .then((result) => {
+        if (result.status === 422) {
+          throw new Error("Validation failed!");
+        }
+        if (result.status !== 200 && result.status !== 201) {
+          console.log("Error!");
+          throw new Error("adding new todo Failed!");
+        }
+        return result.json();
+      })
+      .then((resData) => {
+        if (resData.status === "success") {
+          toast(resData.message);
+          fetchMyTodos();
+        } else {
+          throw new Error(resData.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast(err);
+      });
   };
 
-  const openModal = () => {
-    setShowModal(true);
+  const updatedToDoHandler = (id, todo) => {
+    fetch("http://localhost:8080/todo/update/" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + authContext.user.token,
+      },
+      body: JSON.stringify({
+        ...todo,
+      }),
+    })
+      .then((result) => {
+        if (result.status === 422) {
+          throw new Error("Validation failed!");
+        }
+        if (result.status !== 200 && result.status !== 201) {
+          console.log("Error!");
+          throw new Error("updating todo Failed!");
+        }
+        return result.json();
+      })
+      .then((resData) => {
+        if (resData.status === "success") {
+          fetchMyTodos();
+        } else {
+          throw new Error(resData.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast(err);
+      });
+  };
+
+  const deleteToDoHandler = (id) => {
+    fetch("http://localhost:8080/todo/delete/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + authContext.user.token,
+      },
+    })
+      .then((result) => {
+        if (result.status === 422) {
+          throw new Error("Validation failed!");
+        }
+        if (result.status !== 200 && result.status !== 201) {
+          console.log("Error!");
+          throw new Error("deleting todo Failed!");
+        }
+        return result.json();
+      })
+      .then((resData) => {
+        if (resData.status === "success") {
+          fetchMyTodos();
+        } else {
+          throw new Error(resData.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast(err);
+      });
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    const fetchData = () => {
-      fetch("http://localhost:8080/todo/all")
-        .then((res) => res.json())
-        .then((json) => {
-          console.log(json);
-          setTodos(json.todoItems.items);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log("Error occurred while fetching all the todo items,");
-          console.log(err);
-          setIsLoading(false);
-          notify("ERROR", err.message);
-        });
-    };
-    fetchData();
-  }, []);
+    if (authContext.isLoggedIn) {
+      fetchMyTodos();
+    }
+  }, [authContext]);
 
-  const fetchTodos = () => {
-    setIsLoading(true);
-    fetch("http://localhost:8080/todo/all")
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        setTodos(json.todoItems.items);
-        setIsLoading(false);
-        // notify("SUCCESS",json.message)
-      })
-      .catch((err) => {
-        console.log("Error occurred while fetching all the todo items,");
-        console.log(err);
-        setIsLoading(false);
-        notify("ERROR", err.message);
-      });
-  };
+  let mainSection;
 
-  const addToDoHandler = (todo) => {
-    setIsLoading(true);
-    fetch("http://localhost:8080/todo/new", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: todo.title,
-      }),
-      method: "POST",
-    })
-      .then((result) => result.json())
-      .then((json) => {
-        console.log(json);
-        fetchTodos();
-        setIsLoading(false);
-        notify("SUCCESS", json.message);
-      })
-      .catch((err) => {
-        console.log("Error occurred while fetching  todo items,");
-        console.log(err);
-        setIsLoading(false);
-        notify("ERROR", err.message);
-      });
-    setShowModal(false);
-  };
-
-  const updateToDoHandler = (id, payload) => {
-    setIsLoading(true);
-    fetch(`http://localhost:8080/todo/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...payload,
-      }),
-      method: "PUT",
-    })
-      .then((result) => result.json())
-      .then((json) => {
-        console.log(json);
-        fetchTodos();
-        setIsLoading(false);
-        notify("SUCCESS", json.message);
-      })
-      .catch((err) => {
-        console.log("Error occurred while updating the todo item");
-        console.log(err);
-        setIsLoading(false);
-        notify("ERROR", err.message);
-      });
-  };
-
-  const deleteTodoHandler = (id) => {
-    setIsLoading(true);
-    fetch(`http://localhost:8080/todo/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "DELETE",
-    })
-      .then((result) => result.json())
-      .then((json) => {
-        console.log(json);
-        fetchTodos();
-        setIsLoading(false);
-        notify("SUCCESS", json.message);
-      })
-      .catch((err) => {
-        console.log("Error occurred while deleting the todo item");
-        console.log(err);
-        setIsLoading(false);
-        notify("ERROR", err.message);
-      });
-  };
+  if (authContext.isLoggedIn) {
+    mainSection = (
+      <div>
+        <AddToDo onAdd={addTodoHandler} />
+        <ToDoList
+          todos={todos}
+          onAdd={addTodoHandler}
+          onDelete={deleteToDoHandler}
+          onUpdate={updatedToDoHandler}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="app">
       <NavBar />
-      <main>
-        <div className="center">
-          <Button
-            onClick={openModal}
-            text={"Create a New To-Do"}
-            type={"button"}
-          />
-        </div>
-        {showModal &&
-          createPortal(
-            <Modal onClose={closeModal}>
-              <AddToDo onAdd={addToDoHandler} />
-              <Button onClick={closeModal} text={"Close"} />
-            </Modal>,
-            document.getElementById("modal")
-          )}
-        {isLoading && <LoadingSpinner />}
-        {!isLoading && (
-          <ToDoList
-            todos={todos}
-            onUpdate={updateToDoHandler}
-            onDelete={deleteTodoHandler}
-          />
-        )}
-      </main>
-      <Footer />
+      <section className="main-section">
+        {!authContext.isLoggedIn && <LoginForm />}
+        {authContext.isLoggedIn && mainSection}
+      </section>
+      {authContext.isLoggedIn && <Footer />}
       <ToastContainer position="bottom-right" transition={Bounce} />
     </div>
   );

@@ -2,6 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import { AuthContextProvider } from "./context/AuthContext.js";
 
-root.render(<App />);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <AuthContextProvider>
+    <App />
+  </AuthContextProvider>
+);

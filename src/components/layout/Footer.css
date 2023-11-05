@@ -1,7 +1,8 @@
 .main-footer {
-  background: #f3f0ca;
+  background: #6A2C70;
   padding: 2rem;
-  margin-top: 3rem;
+  padding: 3rem;
+  color:#F9ED69
 }
 
 .main-footer__links {
@@ -17,11 +18,12 @@
 }
 
 .main-footer__link a {
-  color: #3e4af4;
   text-decoration: none;
+  color: #F08A5D;
+  display: inline;
 }
 
 .main-footer__link a:hover,
 .main-footer__link a:active {
-  color: #192655;
+  color: #F9ED69;
 }

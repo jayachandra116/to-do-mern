@@ -1,0 +1,10 @@
+.to-do-edit-form{
+    display: block;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.input-group{
+    width: 100%;
+    margin: 1rem;
+}

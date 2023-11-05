@@ -2,13 +2,13 @@ import React from "react";
 
 import "./Button.css";
 
-function Button(props) {
-  const { onClick, type, text, classes } = props;
+function Button({ onClick, type, text, classes, disabled }) {
   return (
     <button
       onClick={onClick}
       type={type}
       className={"btn " + (classes ? `${classes}` : "")}
+      disabled={disabled}
     >
       {text}
     </button>

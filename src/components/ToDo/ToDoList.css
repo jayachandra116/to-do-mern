@@ -1,9 +1,10 @@
 #section-todo-list {
-  padding-top: 1rem;
-  background-color: #e1aa74;
+  padding: 1rem;
+  background-color: #b83b5e;
   color: #192655;
   text-align: center;
-  margin: 0 0;
+  margin: 0 auto;
+  min-height: 500px;
 }
 
 .todo-list__list {

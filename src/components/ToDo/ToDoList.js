@@ -4,7 +4,7 @@ import "./ToDoList.css";
 import ToDoItem from "./ToDoItem";
 
 function ToDoList(props) {
-  const { todos, onUpdate, onDelete } = props;
+  const { todos, onAdd, onUpdate, onDelete } = props;
 
   const content =
     todos.length >= 1 ? (
@@ -12,8 +12,9 @@ function ToDoList(props) {
         {todos.map((todo) => (
           <ToDoItem
             item={todo}
-            onUpdate={onUpdate}
             key={todo._id}
+            onAdd={onAdd}
+            onUpdate={onUpdate}
             onDelete={onDelete}
           />
         ))}

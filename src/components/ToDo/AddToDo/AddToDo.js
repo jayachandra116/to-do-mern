@@ -4,10 +4,10 @@ import "./AddToDo.css";
 
 import NewToDoForm from "./NewToDoForm";
 
-function AddToDo(props) {
+function AddToDo({onAdd}) {
   return (
     <section id="section-add-to-do">
-      <NewToDoForm onAdd={props.onAdd}/>
+      <NewToDoForm onAdd={onAdd}/>
     </section>
   );
 }

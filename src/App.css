@@ -3,11 +3,13 @@
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  /* font-family: "Montserrat", sans-serif; */
+  font-family: 'Playpen Sans', cursive;
   margin: 0;
+  color: #6A2C70;
 }
 
-main {
+.main-section {
   min-height: calc(100vh - 3.5rem);
   margin-top: 3.5rem;
 }
@@ -19,3 +21,9 @@ main {
   margin-right: auto;
   text-align: center;
 }
+
+.error-title {
+  color: #ea7d7d;
+  margin-top: 0.5rem;
+}
+

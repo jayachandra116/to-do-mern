@@ -1,6 +1,6 @@
 .btn {
-  background: #f3f0ca;
-  color: #072541;
+  background: #B83B5E;
+  color: #F9ED69;
   font: inherit;
   border: 1.5px solid #f3f0ca;
   padding: 0.5rem;
@@ -10,5 +10,5 @@
 }
 .btn:hover {
   background: #072541;
-  color: #f3f0ca;
+  color: #F9ED69;
 }

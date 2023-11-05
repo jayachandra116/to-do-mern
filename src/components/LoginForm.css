@@ -1,0 +1,58 @@
+main {
+  padding-top: 1rem;
+}
+
+.center{
+  margin: 2px auto;
+  align-items: center;
+  display: block;
+}
+
+.login-form {
+  margin: 1rem auto;
+  width: 30%;
+  padding: 1px;
+}
+
+.login-form input {
+  height: 2rem;
+  border: 1px solid #192655;
+  border-radius: 4px;
+}
+
+.login-form input:focus {
+  border: 3px solid #192655;
+}
+
+.login-form button[type="submit"] {
+  display: block;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #172c92, #1c34ad);
+  color: antiquewhite;
+  width: 10rem;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.login-form label {
+  font-weight: bold;
+  line-height: 2rem;
+}
+
+.login-form label,
+.login-form input {
+  display: block;
+  margin-top: 0.3rem;
+  width: 100%;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #192655;
+}
+
+.error-title {
+  color: #c94141;
+  margin-top: 0.5rem;
+}

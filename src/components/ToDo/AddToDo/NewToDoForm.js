@@ -3,34 +3,33 @@ import { useFormik } from "formik";
 
 import "./NewToDoForm.css";
 
-const validateForm = (values) => {
-  const errors = {};
-  if (!values.title) {
-    errors.title = "Can't create a blank to-do item!";
-  }
-  return errors;
-};
-
-function NewToDoForm(props) {
-  const formik = useFormik({
-    initialValues: {
-      title: "",
-      completed: false,
-    },
-    onSubmit: (values) => {
-      formSubmitHandler(values);
-    },
-    validate: validateForm,
-  });
-
+function NewToDoForm({ onAdd }) {
+  
   const formSubmitHandler = (values) => {
     console.log("Form submit handler reached.");
-    props.onAdd({
+    onAdd({
       title: formik.values.title,
     });
     console.log("Resetting formik form ...");
     formik.resetForm();
   };
+
+  const validateForm = (values) => {
+    const errors = {};
+    if (!values.title) {
+      errors.title = "Can't create a blank to-do item!";
+    }
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      completed: false,
+    },
+    onSubmit: formSubmitHandler,
+    validate: validateForm,
+  });
 
   return (
     <form onSubmit={formik.handleSubmit} className="add-to-do-form">
@@ -49,7 +48,7 @@ function NewToDoForm(props) {
       {formik.touched.title && formik.errors.title ? (
         <div className="error-title">{formik.errors.title}</div>
       ) : null}
-      <button className="btn" type="submit" onClick={props.onClick}>
+      <button className="btn" type="submit">
         Create New
       </button>
     </form>
